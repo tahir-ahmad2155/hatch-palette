@@ -15,8 +15,8 @@
   --divider: #E4DCD3;        /* Hairline divider */
 
   /* Typography */
-  --font-serif: 'Cormorant Garamond', serif;
-  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Roboto Serif', serif;
+  --font-sans: 'Roboto', sans-serif;
 
   /* Layout and Sizing */
   --header-height: 90px;
@@ -168,31 +168,34 @@ body {
   letter-spacing: 0.28em;
 }
 
-.inquire-btn {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--accent-bronze);
-  padding: 5px 0;
-  transition: var(--transition-fast);
-}
-
-.inquire-btn:hover {
-  color: var(--accent-bronze);
-  border-color: var(--text-primary);
-}
 
 /* Side ScrollSpy Navigation */
 .side-navigation {
   position: fixed;
   right: 4vw;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateX(calc(100% + 4vw));
   z-index: 99;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.4s ease;
+  opacity: 0;
+}
+
+/* Invisible trigger zone on the right edge of the screen */
+.side-navigation::before {
+  content: '';
+  position: absolute;
+  top: -20vh;
+  bottom: -20vh;
+  right: -4vw;
+  width: 80px;
+  cursor: default;
+}
+
+.side-navigation:hover,
+.side-navigation.is-visible {
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
 }
 
 .nav-list {
@@ -527,83 +530,6 @@ body {
   font-weight: 400;
 }
 
-/* Inquiry Form */
-.inquiry-form-container {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto 5rem auto;
-  text-align: left;
-  border-top: 1px solid var(--divider);
-  padding-top: 4rem;
-}
-
-.inquiry-title {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 300;
-  text-align: center;
-  margin-bottom: 2.5rem;
-  letter-spacing: 0.05em;
-  color: var(--text-primary);
-}
-
-.inquiry-form {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.form-group {
-  width: 100%;
-}
-
-.inquiry-form input,
-.inquiry-form textarea {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--accent-stone);
-  padding: 12px 4px;
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
-  color: var(--text-primary);
-  letter-spacing: 0.05em;
-  outline: none;
-  transition: var(--transition-fast);
-}
-
-.inquiry-form input::placeholder,
-.inquiry-form textarea::placeholder {
-  color: var(--accent-stone);
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
-}
-
-.inquiry-form input:focus,
-.inquiry-form textarea:focus {
-  border-color: var(--accent-bronze);
-}
-
-.submit-btn {
-  width: 100%;
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  border: none;
-  padding: 16px;
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: var(--transition-fast);
-  margin-top: 1rem;
-}
-
-.submit-btn:hover {
-  background: var(--accent-bronze);
-  color: var(--text-primary);
-}
 
 .footer-bottom {
   border-top: 1px solid var(--divider);
@@ -617,6 +543,35 @@ body {
   font-size: 0.7rem;
   letter-spacing: 0.15em;
   color: var(--accent-stone);
+}
+
+.dev-credits {
+  margin-top: 1rem;
+}
+
+.developer-link {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-stone);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.developer-link svg {
+  width: 11px;
+  height: 11px;
+  stroke-width: 2px;
+}
+
+.developer-link:hover {
+  color: var(--accent-bronze);
+  border-color: var(--accent-bronze);
 }
 
 /* ==========================================================================
@@ -823,8 +778,5 @@ body {
     margin-bottom: 3.5rem;
   }
 
-  .inquiry-form-container {
-    padding-top: 3rem;
-    margin-bottom: 3.5rem;
-  }
+
 }

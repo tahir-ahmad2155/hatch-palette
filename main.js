@@ -213,4 +213,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+  // Side Navigation: reveal on cursor near right edge
+  const sideNav = document.querySelector('.side-navigation');
+  if (sideNav) {
+    const EDGE_THRESHOLD = 100; // pixels from right edge
+    document.addEventListener('mousemove', (e) => {
+      const distFromRight = window.innerWidth - e.clientX;
+      if (distFromRight <= EDGE_THRESHOLD) {
+        sideNav.classList.add('is-visible');
+      } else if (!sideNav.matches(':hover')) {
+        sideNav.classList.remove('is-visible');
+      }
+    });
+
+    // Also hide when mouse leaves the nav after moving away from the edge
+    sideNav.addEventListener('mouseleave', () => {
+      sideNav.classList.remove('is-visible');
+    });
+  }
 });
