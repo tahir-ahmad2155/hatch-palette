@@ -154,18 +154,34 @@ body {
 }
 
 .logo {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 400;
-  letter-spacing: 0.25em;
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  color: var(--text-primary);
   transition: var(--transition-fast);
 }
 
-.logo:hover {
-  color: var(--accent-bronze);
-  letter-spacing: 0.28em;
+.logo-image {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  transition: var(--transition-fast);
+}
+
+.logo:hover .logo-image {
+  opacity: 0.7;
+  transform: scale(1.02);
+}
+
+/* Final section logo */
+.final-logo-container {
+  margin-bottom: 2.5rem;
+}
+
+.final-logo-image {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.85;
 }
 
 
@@ -494,13 +510,29 @@ body {
   margin-bottom: 4rem;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(184, 154, 114, 0.15);
+  box-shadow: 0 15px 35px rgba(184, 154, 114, 0.12);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 35px;
+  transition: var(--transition-smooth);
+}
+
+.final-image-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 45px rgba(184, 154, 114, 0.2);
 }
 
 .final-emblem-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  transition: var(--transition-smooth);
+}
+
+.final-image-container:hover .final-emblem-image {
+  transform: scale(1.05);
 }
 
 .final-brand-title {
