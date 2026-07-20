@@ -69,9 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let x = 0; x < width; x++) {
           // Combination of sine and cosine waves to create a more natural organic outline
-          const y = wave.y + 
-                    Math.sin(x * wave.length + wave.phase) * wave.amplitude + 
-                    Math.cos(x * wave.length * 0.4 + wave.phase * 0.65) * (wave.amplitude * 0.35);
+          const y = wave.y +
+            Math.sin(x * wave.length + wave.phase) * wave.amplitude +
+            Math.cos(x * wave.length * 0.4 + wave.phase * 0.65) * (wave.amplitude * 0.35);
           ctx.lineTo(x, y);
         }
 
@@ -86,14 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       requestAnimationFrame(animateWaves);
     }
-    
+
     // Start canvas animation
     animateWaves();
   }
 
   // 2. Scroll Reveal Animations (using IntersectionObserver)
   const revealElements = document.querySelectorAll('.reveal-element');
-  
+
   if (revealElements.length > 0) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const speed = parseFloat(container.getAttribute('data-speed')) || 0.05;
         // Center position of container relative to viewport center
         const centerPos = (rect.top + containerHeight / 2) - (viewportHeight / 2);
-        
+
         const img = container.querySelector('img');
         if (img) {
           // Adjust translation factor
