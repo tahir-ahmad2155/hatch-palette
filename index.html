@@ -29,71 +29,9 @@
 
   <!-- Local Stylesheet -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- Synchronous Launch Lock Guard -->
-  <script>
-    (function () {
-      const TARGET_TIMESTAMP = new Date("2026-07-23T11:11:00+05:30").getTime();
-      const urlParams = new URLSearchParams(window.location.search);
-      if (Date.now() < TARGET_TIMESTAMP && !urlParams.has('preview')) {
-        document.documentElement.classList.add('is-locked');
-      }
-    })();
-  </script>
 </head>
 
 <body>
-
-  <!-- Full Screen Coming Soon Launch Lock Overlay (Active before 23 July 2026 11:11 AM IST) -->
-  <div class="cs-launch-wrapper" id="cs-launch-wrapper" style="display: none;">
-    <canvas id="cs-particle-canvas"></canvas>
-    <div class="cs-glow-aura" aria-hidden="true"></div>
-
-    <div class="cs-content-container">
-      <div class="cs-logo-wrapper">
-        <div class="cs-logo-halo" aria-hidden="true"></div>
-        <img src="assets/hp_logo_white_transparent.webp" alt="Hatch Palette Logo" class="cs-logo-img">
-      </div>
-
-      <h1 class="cs-headline serif-text">Something Extraordinary is Coming</h1>
-
-      <div class="cs-countdown-grid" id="cs-countdown-grid">
-        <div class="cs-card">
-          <div class="cs-card-value" id="cs-days">00</div>
-          <div class="cs-card-label">DAYS</div>
-        </div>
-
-        <div class="cs-card">
-          <div class="cs-card-value" id="cs-hours">00</div>
-          <div class="cs-card-label">HOURS</div>
-        </div>
-
-        <div class="cs-card">
-          <div class="cs-card-value" id="cs-minutes">00</div>
-          <div class="cs-card-label">MINUTES</div>
-        </div>
-
-        <div class="cs-card">
-          <div class="cs-card-value" id="cs-seconds">00</div>
-          <div class="cs-card-label">SECONDS</div>
-        </div>
-      </div>
-
-      <div class="cs-launch-info">
-        <span class="cs-info-subtitle">LAUNCHING ON</span>
-        <div class="cs-info-date serif-text">23 July 2026</div>
-        <span class="cs-info-time">11:11 AM IST</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Cinematic Transition Screen Overlay -->
-  <div class="cs-transition-overlay" id="cs-transition-overlay">
-    <div class="cs-reveal-logo-wrapper">
-      <img src="assets/hp_logo_white_transparent.webp" alt="Hatch Palette" class="cs-reveal-logo">
-      <p class="cs-reveal-tagline serif-text">Be the wave</p>
-    </div>
-  </div>
 
   <!-- Background Canvas for Subtle Sandy Wind Wave Animation -->
   <canvas id="bg-wave-canvas"></canvas>
