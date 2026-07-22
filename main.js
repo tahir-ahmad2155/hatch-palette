@@ -232,3 +232,225 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+/* ==========================================================================
+   Hatch Palette — Premium Full-Screen Launch System Controller
+   ========================================================================== */
+(function initHatchLaunchSystem() {
+  // Target Launch Time: 22 July 2026 at 11:20:00 PM IST (Asia/Kolkata timezone offset +05:30)
+  const LAUNCH_TARGET_ISO = '2026-07-22T23:20:00+05:30';
+  const targetTimestamp = new Date(LAUNCH_TARGET_ISO).getTime();
+
+  // Transition Timing Configuration (in milliseconds)
+  const FADE_OUT_COUNTDOWN_MS = 800; // Fade out countdown over 800ms
+  const LAUNCHING_ANIM_MS = 1500;     // Show premium "Launching..." animation for 1.5s
+  const FADE_IN_WEBSITE_MS = 800;    // Fade in hidden website smoothly
+
+  let countdownInterval = null;
+  let particleAnimFrame = null;
+  let isSequenceRunning = false;
+
+  function getElements() {
+    return {
+      launchScreen: document.getElementById('launch-screen'),
+      websiteContent: document.getElementById('website-content'),
+      countdownView: document.getElementById('launch-countdown-view'),
+      revealingView: document.getElementById('launch-revealing-view'),
+      daysEl: document.getElementById('cd-days'),
+      hoursEl: document.getElementById('cd-hours'),
+      minutesEl: document.getElementById('cd-minutes'),
+      secondsEl: document.getElementById('cd-seconds'),
+      particleCanvas: document.getElementById('launch-particle-canvas')
+    };
+  }
+
+  function bypassCountdown() {
+    const els = getElements();
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+
+    if (els.launchScreen) {
+      els.launchScreen.classList.add('is-hidden');
+      els.launchScreen.style.display = 'none';
+    }
+    if (els.websiteContent) {
+      els.websiteContent.classList.remove('is-hidden');
+      els.websiteContent.classList.add('is-revealed');
+    }
+  }
+
+  function updateCountdown() {
+    const els = getElements();
+    if (!els.daysEl) return;
+
+    const now = Date.now();
+    const diff = targetTimestamp - now;
+
+    if (diff <= 0) {
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+      }
+      if (!isSequenceRunning) {
+        triggerLaunchSequence();
+      }
+      return;
+    }
+
+    const seconds = Math.floor((diff / 1000) % 60);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    els.daysEl.textContent = String(days).padStart(2, '0');
+    els.hoursEl.textContent = String(hours).padStart(2, '0');
+    els.minutesEl.textContent = String(minutes).padStart(2, '0');
+    els.secondsEl.textContent = String(seconds).padStart(2, '0');
+  }
+
+  function triggerLaunchSequence() {
+    if (isSequenceRunning) return;
+    isSequenceRunning = true;
+
+    const els = getElements();
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
+
+    if (els.countdownView) {
+      els.countdownView.classList.add('fade-out');
+    }
+
+    setTimeout(() => {
+      if (els.countdownView) {
+        els.countdownView.style.display = 'none';
+      }
+      if (els.revealingView) {
+        els.revealingView.style.display = 'flex';
+        void els.revealingView.offsetWidth; // Force layout recalculation
+        els.revealingView.classList.add('active');
+      }
+
+      setTimeout(() => {
+        if (els.websiteContent) {
+          els.websiteContent.classList.remove('is-hidden');
+          els.websiteContent.classList.add('is-revealed');
+        }
+        if (els.launchScreen) {
+          els.launchScreen.style.opacity = '0';
+        }
+
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+
+        setTimeout(() => {
+          if (els.launchScreen) {
+            els.launchScreen.classList.add('is-hidden');
+            els.launchScreen.style.display = 'none';
+          }
+          if (particleAnimFrame) {
+            cancelAnimationFrame(particleAnimFrame);
+            particleAnimFrame = null;
+          }
+
+          window.dispatchEvent(new Event('resize'));
+          window.dispatchEvent(new Event('scroll'));
+        }, FADE_IN_WEBSITE_MS);
+
+      }, LAUNCHING_ANIM_MS);
+
+    }, FADE_OUT_COUNTDOWN_MS);
+  }
+
+  function initParticleCanvas() {
+    const canvas = document.getElementById('launch-particle-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      if (canvas.offsetParent === null) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const count = Math.min(Math.floor(window.innerWidth / 16), 60);
+
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 2 + 0.8,
+        alpha: Math.random() * 0.5 + 0.2,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35 - 0.15,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+
+    function renderParticles() {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        p.phase += 0.02;
+        const currentAlpha = p.alpha + Math.sin(p.phase) * 0.15;
+        const boundedAlpha = Math.max(0.1, Math.min(0.85, currentAlpha));
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(184, 154, 114, ${boundedAlpha})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = 'rgba(184, 154, 114, 0.25)';
+        ctx.fill();
+      });
+
+      particleAnimFrame = requestAnimationFrame(renderParticles);
+    }
+
+    renderParticles();
+  }
+
+  function startLaunchSystem() {
+    const els = getElements();
+    const now = Date.now();
+
+    if (now >= targetTimestamp) {
+      bypassCountdown();
+    } else {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      if (els.websiteContent) {
+        els.websiteContent.classList.add('is-hidden');
+      }
+      initParticleCanvas();
+      updateCountdown();
+      if (countdownInterval) clearInterval(countdownInterval);
+      countdownInterval = setInterval(updateCountdown, 1000);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startLaunchSystem);
+  } else {
+    startLaunchSystem();
+  }
+
+  // Developer / Testing API available on window
+  window.HATCH_LAUNCH_SYSTEM = {
+    triggerLaunch: triggerLaunchSequence,
+    bypassLaunch: bypassCountdown,
+    getTargetTime: () => new Date(LAUNCH_TARGET_ISO).toString()
+  };
+})();
