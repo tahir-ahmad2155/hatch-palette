@@ -984,3 +984,23 @@ transform: scale(1.12);
     transform: translate(-60px, 60px) rotate(8deg) scale(1.05);
   }
 }
+
+/* Custom ALA Section Image Fitting */
+#ala-venture .main-img-wrapper {
+  max-width: 480px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin: 0 auto;
+  box-shadow: 0 20px 40px rgba(59, 47, 42, 0.08);
+  border: 1px solid var(--divider);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+#ala-venture img {
+  object-fit: contain !important;
+  background-color: var(--bg-secondary);
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0.5rem;
+}

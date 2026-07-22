@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hatch Palette — Launching Soon</title>
+  <link rel="icon" type="image/webp" href="assets/hp_icon_dark.webp">
+
+  <meta name="description"
+    content="Something Extraordinary is Coming. Hatch Palette — Launching on 23 July 2026 at 11:11 AM IST.">
+  <meta name="robots" content="noindex, follow">
+
+  <!-- Google Fonts - Plus Jakarta Sans & Roboto Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Roboto+Serif:ital,wght@0,200;0,300;0,400;0,500;1,300;1,400&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="coming-soon-body">
+
+  <!-- Full Screen Launch Page Container -->
+  <div class="cs-launch-wrapper" id="cs-launch-wrapper">
+
+    <!-- 60 FPS Particle Canvas -->
+    <canvas id="cs-particle-canvas"></canvas>
+
+    <!-- Radial Glow Background Aura -->
+    <div class="cs-glow-aura" aria-hidden="true"></div>
+
+    <!-- Main Content Container -->
+    <div class="cs-content-container">
+
+      <!-- Center Brand Logo with Glowing Halo -->
+      <div class="cs-logo-wrapper">
+        <div class="cs-logo-halo" aria-hidden="true"></div>
+        <img src="assets/hp_logo_white_transparent.webp" alt="Hatch Palette Logo" class="cs-logo-img">
+      </div>
+
+      <!-- Headline -->
+      <h1 class="cs-headline serif-text">Something Extraordinary is Coming</h1>
+
+      <!-- Countdown Timer Grid -->
+      <div class="cs-countdown-grid" id="cs-countdown-grid">
+        <div class="cs-card">
+          <div class="cs-card-value" id="cs-days">00</div>
+          <div class="cs-card-label">DAYS</div>
+        </div>
+
+        <div class="cs-card">
+          <div class="cs-card-value" id="cs-hours">00</div>
+          <div class="cs-card-label">HOURS</div>
+        </div>
+
+        <div class="cs-card">
+          <div class="cs-card-value" id="cs-minutes">00</div>
+          <div class="cs-card-label">MINUTES</div>
+        </div>
+
+        <div class="cs-card">
+          <div class="cs-card-value" id="cs-seconds">00</div>
+          <div class="cs-card-label">SECONDS</div>
+        </div>
+      </div>
+
+      <!-- Launch Date Footer Info -->
+      <div class="cs-launch-info">
+        <span class="cs-info-subtitle">LAUNCHING ON</span>
+        <div class="cs-info-date serif-text">23 July 2026</div>
+        <span class="cs-info-time">11:11 AM IST</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Cinematic Transition Screen Overlay -->
+  <div class="cs-transition-overlay" id="cs-transition-overlay">
+    <div class="cs-reveal-logo-wrapper">
+      <img src="assets/hp_logo_white_transparent.webp" alt="Hatch Palette" class="cs-reveal-logo">
+      <p class="cs-reveal-tagline serif-text">Be the wave</p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Launch Date Target: 23 July 2026 at 11:11:00 AM IST (Asia/Kolkata)
+      const TARGET_ISO_STRING = "2026-07-23T11:11:00+05:30";
+      const TARGET_TIMESTAMP = new Date(TARGET_ISO_STRING).getTime();
+
+      const daysEl = document.getElementById('cs-days');
+      const hoursEl = document.getElementById('cs-hours');
+      const minutesEl = document.getElementById('cs-minutes');
+      const secondsEl = document.getElementById('cs-seconds');
+
+      const transitionOverlay = document.getElementById('cs-transition-overlay');
+      let isTransitioning = false;
+
+      function padZero(num) {
+        return num < 10 ? '0' + num : '' + num;
+      }
+
+      function updateCardValue(element, newValue) {
+        if (element.textContent !== newValue) {
+          element.classList.add('cs-pop');
+          element.textContent = newValue;
+          setTimeout(() => element.classList.remove('cs-pop'), 250);
+        }
+      }
+
+      function triggerLaunchTransition() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        // Show cinematic fade-to-black + glowing emblem reveal
+        transitionOverlay.classList.add('active');
+
+        // Automatically redirect to index.html after cinematic animation
+        setTimeout(() => {
+          window.location.href = 'index.html?launched=true';
+        }, 3200);
+      }
+
+      function updateCountdown() {
+        const now = Date.now();
+        const diff = TARGET_TIMESTAMP - now;
+
+        if (diff <= 0) {
+          updateCardValue(daysEl, '00');
+          updateCardValue(hoursEl, '00');
+          updateCardValue(minutesEl, '00');
+          updateCardValue(secondsEl, '00');
+          triggerLaunchTransition();
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = Math.floor(totalSeconds % 60);
+
+        updateCardValue(daysEl, padZero(days));
+        updateCardValue(hoursEl, padZero(hours));
+        updateCardValue(minutesEl, padZero(minutes));
+        updateCardValue(secondsEl, padZero(seconds));
+      }
+
+      // Initial run
+      updateCountdown();
+      const timerInterval = setInterval(updateCountdown, 1000);
+
+      // Particle Engine Canvas
+      const canvas = document.getElementById('cs-particle-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        });
+
+        const particleCount = Math.min(Math.floor(width * 0.05), 65);
+        const particles = [];
+
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 1.8 + 0.5,
+            color: Math.random() > 0.4 ? 'rgba(218, 197, 164, ' : 'rgba(255, 255, 255, ',
+            alpha: Math.random() * 0.4 + 0.1,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: -Math.random() * 0.3 - 0.1,
+            pulse: Math.random() * 0.02
+          });
+        }
+
+        function animateParticles() {
+          ctx.clearRect(0, 0, width, height);
+
+          for (let p of particles) {
+            p.x += p.vx;
+            p.y += p.vy;
+
+            if (p.y < 0) {
+              p.y = height + 10;
+              p.x = Math.random() * width;
+            }
+            if (p.x < 0) p.x = width;
+            if (p.x > width) p.x = 0;
+
+            p.alpha += Math.sin(Date.now() * 0.001) * p.pulse * 0.01;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = p.color + Math.max(0.05, Math.min(0.5, p.alpha)) + ')';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(218, 197, 164, 0.4)';
+            ctx.fill();
+          }
+
+          requestAnimationFrame(animateParticles);
+        }
+
+        requestAnimationFrame(animateParticles);
+      }
+    })();
+  </script>
+</body>
+
+</html>
