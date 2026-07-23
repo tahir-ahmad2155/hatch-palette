@@ -237,8 +237,8 @@ document.addEventListener('DOMContentLoaded', () => {
    Hatch Palette — Premium Full-Screen Launch System Controller
    ========================================================================== */
 (function initHatchLaunchSystem() {
-  // Target Launch Time: 23 July 2026 at 11:11:00 AM IST (Asia/Kolkata timezone offset +05:30)
-  const LAUNCH_TARGET_ISO = '2026-07-23T11:11:00+05:30';
+  // Target Launch Time: 23 July 2026 at 6:30:00 PM IST (Asia/Kolkata timezone offset +05:30)
+  const LAUNCH_TARGET_ISO = '2026-07-23T18:30:00+05:30';
   const targetTimestamp = new Date(LAUNCH_TARGET_ISO).getTime();
 
   // Transition Timing Configuration (in milliseconds)

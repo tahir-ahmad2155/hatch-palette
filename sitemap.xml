@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://hatchpalette.com/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://hatchpalette.com/assets/hero.webp</image:loc>
+      <image:title>Hatch Palette — A Modern House of Patronage</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://hatchpalette.com/assets/wood_carving.webp</image:loc>
+      <image:title>Craftsmanship Outlives Kingdoms</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://hatchpalette.com/assets/citadel_creators.webp</image:loc>
+      <image:title>The Citadel of Creators</image:title>
+    </image:image>
+  </url>
+</urlset>

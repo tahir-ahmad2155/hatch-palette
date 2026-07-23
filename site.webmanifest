@@ -1,0 +1,23 @@
+{
+  "name": "Hatch Palette — A Modern House of Patronage",
+  "short_name": "Hatch Palette",
+  "description": "Hatch Palette is a modern house of patronage that turns master craftsmen, architects, designers, and farmers into founders and brand owners of their own ventures.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F5F0",
+  "theme_color": "#F8F5F0",
+  "icons": [
+    {
+      "src": "assets/hp_icon_dark.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/hp_icon_dark.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}
